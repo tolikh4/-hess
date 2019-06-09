@@ -257,18 +257,18 @@ function setMove(e, move) {
 
 
     // Проверка хода
-    function rookCheck(i, i_max, rookMove) {
+    function rookCheck(i, i_max, arrMove) {
         for ( i; i < i_max; i++) {
-            if (  thisCoord[0] + rookMove[i][0] >= 0  && thisCoord[0] + rookMove[i][0] < 8 &&
-                thisCoord[1] + rookMove[i][1] >= 0  && thisCoord[1] + rookMove[i][1] < 8) {
+            if (  thisCoord[0] + arrMove[i][0] >= 0  && thisCoord[0] + arrMove[i][0] < 8 &&
+                thisCoord[1] + arrMove[i][1] >= 0  && thisCoord[1] + arrMove[i][1] < 8) {
                     
-                if ((e.classList.contains('white') && document.querySelector(`[data-x="${thisCoord[0] + rookMove[i][0]}"][data-y="${thisCoord[1] + rookMove[i][1]}"]`).classList.contains('white')) ||
-                    (e.classList.contains('black') && document.querySelector(`[data-x="${thisCoord[0] + rookMove[i][0]}"][data-y="${thisCoord[1] + rookMove[i][1]}"]`).classList.contains('black')) ||
-                    (e.classList.contains('white') && document.querySelector(`[data-x="${thisCoord[0] + rookMove[i][0]}"][data-y="${thisCoord[1] + rookMove[i][1]}"]`).classList.contains('black')) ||
-                    (e.classList.contains('black') && document.querySelector(`[data-x="${thisCoord[0] + rookMove[i][0]}"][data-y="${thisCoord[1] + rookMove[i][1]}"]`).classList.contains('white'))) {
+                if ((e.classList.contains('white') && document.querySelector(`[data-x="${thisCoord[0] + arrMove[i][0]}"][data-y="${thisCoord[1] + arrMove[i][1]}"]`).classList.contains('white')) ||
+                    (e.classList.contains('black') && document.querySelector(`[data-x="${thisCoord[0] + arrMove[i][0]}"][data-y="${thisCoord[1] + arrMove[i][1]}"]`).classList.contains('black')) ||
+                    (e.classList.contains('white') && document.querySelector(`[data-x="${thisCoord[0] + arrMove[i][0]}"][data-y="${thisCoord[1] + arrMove[i][1]}"]`).classList.contains('black')) ||
+                    (e.classList.contains('black') && document.querySelector(`[data-x="${thisCoord[0] + arrMove[i][0]}"][data-y="${thisCoord[1] + arrMove[i][1]}"]`).classList.contains('white'))) {
                     console.log('0-7');
                     for (let k = i+1; k < i_max; k++) {
-                        let item = document.querySelector(`[data-x="${thisCoord[0] + rookMove[k][0]}"][data-y="${thisCoord[1] + rookMove[k][1]}"]`);
+                        let item = document.querySelector(`[data-x="${thisCoord[0] + arrMove[k][0]}"][data-y="${thisCoord[1] + arrMove[k][1]}"]`);
                         if (item) {
                             item.classList.remove('active');
                         }
@@ -314,7 +314,7 @@ function moves(e) {
         element.classList.remove('active');
         element.classList.remove('move_item');
     });
-    
+
     change = true;
     step++;
     // Сохранение расстановки фигур после каждого шага
