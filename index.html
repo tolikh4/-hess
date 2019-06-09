@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        .fild {
+            display: flex;
+            /* align-items: center; */
+            justify-content: center;
+            flex-wrap: wrap;
+            height: 100vh;
+        }
+        .panel {
+            text-align: center;
+        }
+        .wrap {
+            /* margin: 50px auto; */
+            width: 100%;
+            border: 1px solid #000;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            height: 95%;
+        }
+        .exel {
+            width: 12.5%;
+            height: 12.5%;
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            box-sizing: border-box;
+            border: 1px solid #000;
+        }
+        .bg-black {
+            background-color: #525252;
+        }
+        .active {
+            background-color: #0080004d;
+        }
+        .pawn_white {
+            background-image: url(figures/Chess_White_Pawn.svg);
+        }
+        .pawn_black {
+            background-image: url(figures/Chess_Black_Pawn.svg);
+        }
+        .rook_white {
+            background-image: url(figures/Chess_White_Rook.svg);
+        }
+        .rook_black {
+            background-image: url(figures/Chess_Black_Rook.svg);
+        }
+        .bishop_white {
+            background-image: url(figures/Chess_White_Bishop.svg);
+        }
+        .bishop_black {
+            background-image: url(figures/Chess_Black_Bishop.svg);
+        }
+        .knight_white {
+            background-image: url(figures/Chess_White_Knight.svg);
+        }
+        .knight_black {
+            background-image: url(figures/Chess_Black_Knight.svg);
+        }
+        .queen_white {
+            background-image: url(figures/Chess_White_Queen.svg);
+        }
+        .queen_black {
+            background-image: url(figures/Chess_Black_Queen.svg);
+        }
+        .king_white {
+            background-image: url(figures/Chess_White_King.svg);
+        }
+        .king_black {
+            background-image: url(figures/Chess_Black_King.svg);
+        }
+        button {
+            margin: 5px 0 5px 10px; 
+        }
+        @media (max-width: 768px) {
+            .wrap {
+                height: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fild">
+        
+        <div class="panel">
+            Первый шаг:
+            <input type="radio" name="turn" checked id="white"><label for="white">Белые</label>
+            <input type="radio" name="turn" id="black"><label for="black">Черные</label>
+            <button class="new_game">Reset</button>
+            <button class="save">Save</button>
+            <button class="load">Load</button>
+        </div>
+            
+        
+        <div class="wrap">
+
+        </div>
+    </div>
+    
+
+    <script src="main.js"></script>
+</body>
+</html>
