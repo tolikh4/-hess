@@ -72,21 +72,26 @@ function load_game() {
 // Массивы с логикой ходов для фигур
 const horseMove = [[1,2],[-1,2],[1,-2],[-1,-2],[2,1],[2,-1],[-2,1],[-2,-1]];
 const rookMove = [
-    [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],
-    [0,-1],[0,-2],[0,-3],[0,-4],[0,-5],[0,-6],[0,-7],[0,-8],
-    [1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0],
-    [-1,0],[-2,0],[-3,0],[-4,0],[-5,0],[-6,0],[-7,0],[-8,0]
+    [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
+    [0,-1],[0,-2],[0,-3],[0,-4],[0,-5],[0,-6],[0,-7],
+    [1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],
+    [-1,0],[-2,0],[-3,0],[-4,0],[-5,0],[-6,0],[-7,0]
 ];
-let bishopMove = [];
-for (let i = -8; i <= 8; i++) {
-    for (let k = -8; k <= 8; k++) {
-        let arr = [];
-        if (i/k == 1 || i/k == -1) {
-            arr.push(i, k);
-            bishopMove.push(arr);
-        }
-    }
-};
+let bishopMove = [
+    [1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],
+    [-1,-1],[-2,-2],[-3,-3],[-4,-4],[-5,-5],[-6,-6],[-7,-7],
+    [-1,1],[-2,2],[-3,3],[-4,4],[-5,5],[-6,6],[-7,7],
+    [1,-1],[2,-2],[3,-3],[4,-4],[5,-5],[6,-6],[7,-7],
+];
+// for (let i = -7; i <= 7; i++) {
+//     for (let k = -7; k <= 7; k++) {
+//         let arr = [];
+//         if (i/k == 1 || i/k == -1) {
+//             arr.push(i, k);
+//             bishopMove.push(arr);
+//         }
+//     }
+// };
 const pawn_whiteMove = [
     [0, 1],[0, 2]
     // [1, 1],[-1, 1]
@@ -180,22 +185,22 @@ function checkPawn(e, coef, color) {
     if ((+e.target.dataset.y +1) < 8 ) {
         step1 = document.querySelector(`[data-x="${+e.target.dataset.x}"][data-y="${+e.target.dataset.y+1*coef}"]`);
         step2 = document.querySelector(`[data-x="${+e.target.dataset.x}"][data-y="${+e.target.dataset.y+2*coef}"]`);
-        if (step2.classList.contains(color)) {
+        if (step2.classList.contains(color) ) {
             step2.classList.remove('active');
         }
-        if (step1.classList.contains(color)) {
+        if (!step1.classList.contains('0')) {
             step1.classList.remove('active');
             step2.classList.remove('active');
         }
     }
-    if ((+e.target.dataset.x +1) < 8 && (+e.target.dataset.x - 1) > 0 ) {
+    if ((+e.target.dataset.x +1) < 8 || (+e.target.dataset.x - 1) > 0 ) {
         left = document.querySelector(`[data-x="${+e.target.dataset.x-1}"][data-y="${+e.target.dataset.y+1*coef}"]`);
         right = document.querySelector(`[data-x="${+e.target.dataset.x+1}"][data-y="${+e.target.dataset.y+1*coef}"]`);
-        if (left.classList.contains(color)) {
+        if (left && left.classList.contains(color)) {
             left.classList.add('active');
             step2.classList.remove('active');
         }
-        if (right.classList.contains(color)) {
+        if (right && right.classList.contains(color)) {
             right.classList.add('active');
             step2.classList.remove('active');
         }
@@ -207,11 +212,12 @@ function checkPawn(e, coef, color) {
 function setMove(e, move) {
     document.querySelectorAll('.exel').forEach(function (element) {
         element.classList.remove('active');
-    })
+        element.classList.remove('move_item');
+    });
     let x = e.dataset.x;
     let y = e.dataset.y;
     
-    // e.classList.toggle('move_item');
+    e.classList.toggle('move_item');
     
     let thisCoord = [parseInt(x), parseInt(y)]
     const moves = move.filter(value => {
@@ -230,7 +236,47 @@ function setMove(e, move) {
         }
     })
     if (e.classList.contains('rook')) {
-        console.log(moves)
+        for (let l = 0; l < 4; l++ ) {
+            rookCheck(l*7, l*7+7, rookMove);
+        }
+    };
+    if (e.classList.contains('bishop')) {
+        console.log(bishopMove);
+        for (let l = 0; l < 4; l++ ) {
+            rookCheck(l*7, l*7+7, bishopMove);
+        }
+    };
+    if (e.classList.contains('queen')) {
+        console.log(bishopMove);
+        for (let l = 0; l < 8; l++ ) {
+            rookCheck(l*7, l*7+7, queenMove);
+        }
+    };
+
+
+
+
+    // Проверка хода
+    function rookCheck(i, i_max, rookMove) {
+        for ( i; i < i_max; i++) {
+            if (  thisCoord[0] + rookMove[i][0] >= 0  && thisCoord[0] + rookMove[i][0] < 8 &&
+                thisCoord[1] + rookMove[i][1] >= 0  && thisCoord[1] + rookMove[i][1] < 8) {
+                    
+                if ((e.classList.contains('white') && document.querySelector(`[data-x="${thisCoord[0] + rookMove[i][0]}"][data-y="${thisCoord[1] + rookMove[i][1]}"]`).classList.contains('white')) ||
+                    (e.classList.contains('black') && document.querySelector(`[data-x="${thisCoord[0] + rookMove[i][0]}"][data-y="${thisCoord[1] + rookMove[i][1]}"]`).classList.contains('black')) ||
+                    (e.classList.contains('white') && document.querySelector(`[data-x="${thisCoord[0] + rookMove[i][0]}"][data-y="${thisCoord[1] + rookMove[i][1]}"]`).classList.contains('black')) ||
+                    (e.classList.contains('black') && document.querySelector(`[data-x="${thisCoord[0] + rookMove[i][0]}"][data-y="${thisCoord[1] + rookMove[i][1]}"]`).classList.contains('white'))) {
+                    console.log('0-7');
+                    for (let k = i+1; k < i_max; k++) {
+                        let item = document.querySelector(`[data-x="${thisCoord[0] + rookMove[k][0]}"][data-y="${thisCoord[1] + rookMove[k][1]}"]`);
+                        if (item) {
+                            item.classList.remove('active');
+                        }
+                        
+                    }
+                }
+            }            
+        };
     }
 
 }
@@ -263,6 +309,12 @@ function moves(e) {
         element.classList.remove('active');
         element.classList.remove('green');
     })
+
+    document.querySelectorAll('.exel').forEach(function (element) {
+        element.classList.remove('active');
+        element.classList.remove('move_item');
+    });
+    
     change = true;
     step++;
     // Сохранение расстановки фигур после каждого шага
