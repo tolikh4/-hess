@@ -305,11 +305,7 @@ function moves(e) {
         move_item.classList = '';
         move_item.classList.add('exel','bg-black', '0');
     }
-    document.querySelectorAll('.exel').forEach(function (element) {
-        element.classList.remove('active');
-        element.classList.remove('green');
-    })
-
+    
     document.querySelectorAll('.exel').forEach(function (element) {
         element.classList.remove('active');
         element.classList.remove('move_item');
