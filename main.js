@@ -25,15 +25,16 @@ function draw() {
 draw();
 let move_item;
 let change = true;
-let step = 1;
+let step;
 let saveArr = [];
 document.querySelector('.panel').addEventListener('click', function(e) {
     if (e.target == document.querySelector('.new_game')) {
-        if (document.querySelector('#black').checked) {
-            step = 0;
-        } else {
-            step = 1;
-        };
+        // if (document.querySelector('#black').checked) {
+        //     step = 0;
+        // } else {
+        //     step = 1;
+        // };
+        step = undefined;
         draw();
     };
     if (e.target == document.querySelector('.save')) {
@@ -118,6 +119,14 @@ const kingMove = [
 
 
 document.querySelector('.wrap').addEventListener('click', function(e) {
+    if (!step) {
+        if (e.target.classList.contains('white')) {
+            step = 1;
+        } else if (e.target.classList.contains('black')) {
+            step = 0;
+        }
+    }
+    
 
     // Проверка очередности хода
     if(e.target.classList.contains('white') && step%2 == 0) {
