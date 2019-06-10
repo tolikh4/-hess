@@ -46,15 +46,15 @@ document.querySelector('.panel').addEventListener('click', function(e) {
         setTimeout(function() {
             alert('Расстановка фигур сохранена');
         }, 0);
-    }
+    };
     if (e.target == document.querySelector('.load')) {
         load_game();
         setTimeout(function() {
             alert('Расстановка фигур загружена');
         }, 0);
-    }
+    };
     
-})
+});
 function load_game() {
     // saveArr = localStorage.getItem('save_game').split(',');
     saveArr = JSON.parse(localStorage.getItem('save_game'));
@@ -63,12 +63,12 @@ function load_game() {
         item.classList = '';
         for (const key in saveArr[i]) {
             item.classList.add(saveArr[i][key]);
-        }
+        };
         
-    })
+    });
     step = localStorage.getItem('step');
 
-}
+};
 
 // Массивы с логикой ходов для фигур
 const horseMove = [[1,2],[-1,2],[1,-2],[-1,-2],[2,1],[2,-1],[-2,1],[-2,-1]];
@@ -100,22 +100,22 @@ const pawn_whiteMove = [
 const pawn_blackMove = [
     [0, -1],[0, -2]
     // [-1, -1],[1, -1]
-]
+];
 const queenMove = queen();
 function queen() {
     let arr=[];
     rookMove.forEach(function(item) {
         arr.push(item);
-    })
+    });
     bishopMove.forEach(function(item) {
         arr.push(item);
-    })
+    });
     return arr
-}
+};
 const kingMove = [
     [0,1],[0,-1],[1,0],[-1,0],
     [1,1],[1,-1],[-1,1],[-1,-1]
-]
+];
 
 
 document.querySelector('.wrap').addEventListener('click', function(e) {
@@ -124,8 +124,8 @@ document.querySelector('.wrap').addEventListener('click', function(e) {
             step = 1;
         } else if (e.target.classList.contains('black')) {
             step = 0;
-        }
-    }
+        };
+    };
     
 
     // Проверка очередности хода
@@ -135,7 +135,7 @@ document.querySelector('.wrap').addEventListener('click', function(e) {
         change = false;
     } else {
         change = true;
-    }
+    };
      
 
     if (e.target.classList.contains('knight') && change) {
@@ -143,19 +143,19 @@ document.querySelector('.wrap').addEventListener('click', function(e) {
         move_item = e.target;
         change = false;
         setMove(e.target, horseMove);
-    }
+    };
     if (e.target.classList.contains('rook') && change) {
         console.log('rook');
         move_item = e.target;
         change = false;
         setMove(e.target, rookMove);
-    }
+    };
     if (e.target.classList.contains('bishop') && change) {
         console.log('bishob');
         move_item = e.target;
         change = false;
         setMove(e.target, bishopMove);
-    }
+    };
     if (e.target.classList.contains('pawn_white') && change) {
         console.log('pawn');
         move_item = e.target;
@@ -163,7 +163,7 @@ document.querySelector('.wrap').addEventListener('click', function(e) {
         setMove(e.target, pawn_whiteMove);
         checkPawn(e, 1, 'black');
 
-    }
+    };
     if (e.target.classList.contains('pawn_black') && change) {
         console.log('pawn');
         move_item = e.target;
@@ -171,13 +171,13 @@ document.querySelector('.wrap').addEventListener('click', function(e) {
         setMove(e.target, pawn_blackMove);
         checkPawn(e, -1, 'white');
 
-    }
+    };
     if (e.target.classList.contains('queen') && change) {
         console.log('queen');
         move_item = e.target;
         change = false;
         setMove(e.target, queenMove);
-    }
+    };
     if (e.target.classList.contains('king') && change) {
         console.log('king');
         move_item = e.target;
@@ -186,8 +186,8 @@ document.querySelector('.wrap').addEventListener('click', function(e) {
     }
     if (e.target.classList.contains('active')) {
         moves(e.target)
-    }
-})
+    };
+});
 // Проверка на удар пешкой
 function checkPawn(e, coef, color) {
     let step1, step2, left, right;
@@ -196,25 +196,25 @@ function checkPawn(e, coef, color) {
         step2 = document.querySelector(`[data-x="${+e.target.dataset.x}"][data-y="${+e.target.dataset.y+2*coef}"]`);
         if (step2.classList.contains(color) ) {
             step2.classList.remove('active');
-        }
+        };
         if (!step1.classList.contains('0')) {
             step1.classList.remove('active');
             step2.classList.remove('active');
-        }
-    }
+        };
+    };
     if ((+e.target.dataset.x +1) < 8 || (+e.target.dataset.x - 1) > 0 ) {
         left = document.querySelector(`[data-x="${+e.target.dataset.x-1}"][data-y="${+e.target.dataset.y+1*coef}"]`);
         right = document.querySelector(`[data-x="${+e.target.dataset.x+1}"][data-y="${+e.target.dataset.y+1*coef}"]`);
         if (left && left.classList.contains(color)) {
             left.classList.add('active');
             step2.classList.remove('active');
-        }
+        };
         if (right && right.classList.contains(color)) {
             right.classList.add('active');
             step2.classList.remove('active');
-        }
-    }
-}
+        };
+    };
+};
 
 
 // Построение возможных ходов
@@ -233,33 +233,33 @@ function setMove(e, move) {
         if (  thisCoord[0] + value[0] >= 0  && thisCoord[0] + value[0] < 8 &&
         thisCoord[1] + value[1] >= 0  && thisCoord[1] + value[1] < 8) {
         return value
-        }   
-    })
+        }  ; 
+    });
     
     moves.forEach(value => {
         if (e.classList.contains('white') && !document.querySelector(`[data-x="${thisCoord[0] + value[0]}"][data-y="${thisCoord[1] + value[1]}"]`).classList.contains('white')) {
             document.querySelector(`[data-x="${thisCoord[0] + value[0]}"][data-y="${thisCoord[1] + value[1]}"]`).classList.toggle('active');
-        }
+        };
         if (e.classList.contains('black') && !document.querySelector(`[data-x="${thisCoord[0] + value[0]}"][data-y="${thisCoord[1] + value[1]}"]`).classList.contains('black')) {
             document.querySelector(`[data-x="${thisCoord[0] + value[0]}"][data-y="${thisCoord[1] + value[1]}"]`).classList.toggle('active');
-        }
-    })
+        };
+    });
     if (e.classList.contains('rook')) {
         for (let l = 0; l < 4; l++ ) {
             rookCheck(l*7, l*7+7, rookMove);
-        }
+        };
     };
     if (e.classList.contains('bishop')) {
         console.log(bishopMove);
         for (let l = 0; l < 4; l++ ) {
             rookCheck(l*7, l*7+7, bishopMove);
-        }
+        };
     };
     if (e.classList.contains('queen')) {
         console.log(bishopMove);
         for (let l = 0; l < 8; l++ ) {
             rookCheck(l*7, l*7+7, queenMove);
-        }
+        };
     };
 
 
@@ -280,15 +280,15 @@ function setMove(e, move) {
                         let item = document.querySelector(`[data-x="${thisCoord[0] + arrMove[k][0]}"][data-y="${thisCoord[1] + arrMove[k][1]}"]`);
                         if (item) {
                             item.classList.remove('active');
-                        }
+                        };
                         
-                    }
-                }
-            }            
+                    };
+                };
+            };       
         };
-    }
+    };
 
-}
+};
 
 // Перемещение фигуры
 function moves(e) {
@@ -296,24 +296,24 @@ function moves(e) {
         e.classList = move_item.classList;
         move_item.classList = '';
         move_item.classList.add('exel', 'bg-black', '0');
-    }
+    };
     if(!move_item.classList.contains('bg-black') && e.classList.contains('bg-black')) {
         e.classList = move_item.classList;
         e.classList.add('bg-black');
         move_item.classList = '';
         move_item.classList.add('exel', '0');
-    }
+    };
     if(!move_item.classList.contains('bg-black') && !e.classList.contains('bg-black')) {
         e.classList = move_item.classList;
         move_item.classList = '';
         move_item.classList.add('exel', '0');
-    }
+    };
     if(move_item.classList.contains('bg-black') && !e.classList.contains('bg-black')) {
         e.classList = move_item.classList;
         e.classList.remove('bg-black');
         move_item.classList = '';
         move_item.classList.add('exel','bg-black', '0');
-    }
+    };
     
     document.querySelectorAll('.exel').forEach(function (element) {
         element.classList.remove('active');
@@ -327,6 +327,6 @@ function moves(e) {
     document.querySelectorAll('.exel').forEach( item => {
         saveArr.push(item.classList);
         
-    })
+    });
     saveArr = JSON.stringify(saveArr);
 }
